@@ -37,7 +37,7 @@ class Calculator:
             ['7', '8', '9', '*'],
             ['4', '5', '6', '-'],
             ['1', '2', '3', '+'],
-            ['√', '0', '.', '=']
+            ['x²', '√', '0', '.', '=']
         ]
 
         for i, row in enumerate(buttons):
@@ -69,7 +69,7 @@ class Calculator:
                                   bd=0,
                                   command=lambda x=btn_text: self.on_button_click(x))
                     btn.grid(row=i, column=j, sticky="nsew", padx=2, pady=2)
-                elif btn_text == '√':
+                elif btn_text in ['√', 'x²']:
                     btn = tk.Button(buttons_frame, text=btn_text,
                                   font=('Arial', 18, 'bold'),
                                   bg="#9b59b6",
@@ -104,6 +104,14 @@ class Calculator:
         elif char == '√':
             try:
                 result = str(math.sqrt(float(self.expression)))
+                self.result_var.set(result)
+                self.expression = result
+            except:
+                self.result_var.set("Hiba")
+                self.expression = ""
+        elif char == 'x²':
+            try:
+                result = str(float(self.expression) ** 2)
                 self.result_var.set(result)
                 self.expression = result
             except:
