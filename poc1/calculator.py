@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+import math
 
 class Calculator:
     def __init__(self, root):
@@ -36,22 +37,12 @@ class Calculator:
             ['7', '8', '9', '*'],
             ['4', '5', '6', '-'],
             ['1', '2', '3', '+'],
-            ['0', '.', '=']
+            ['√', '0', '.', '=']
         ]
 
         for i, row in enumerate(buttons):
             for j, btn_text in enumerate(row):
-                if btn_text == '0':
-                    colspan = 2
-                    btn = tk.Button(buttons_frame, text=btn_text,
-                                  font=('Arial', 18, 'bold'),
-                                  bg="#34495e",
-                                  fg="white",
-                                  activebackground="#1abc9c",
-                                  bd=0,
-                                  command=lambda x=btn_text: self.on_button_click(x))
-                    btn.grid(row=i, column=j, columnspan=colspan, sticky="nsew", padx=2, pady=2)
-                elif btn_text == '=':
+                if btn_text == '=':
                     btn = tk.Button(buttons_frame, text=btn_text,
                                   font=('Arial', 18, 'bold'),
                                   bg="#1abc9c",
@@ -78,6 +69,15 @@ class Calculator:
                                   bd=0,
                                   command=lambda x=btn_text: self.on_button_click(x))
                     btn.grid(row=i, column=j, sticky="nsew", padx=2, pady=2)
+                elif btn_text == '√':
+                    btn = tk.Button(buttons_frame, text=btn_text,
+                                  font=('Arial', 18, 'bold'),
+                                  bg="#9b59b6",
+                                  fg="white",
+                                  activebackground="#8e44ad",
+                                  bd=0,
+                                  command=lambda x=btn_text: self.on_button_click(x))
+                    btn.grid(row=i, column=j, sticky="nsew", padx=2, pady=2)
                 else:
                     btn = tk.Button(buttons_frame, text=btn_text,
                                   font=('Arial', 18, 'bold'),
@@ -101,6 +101,14 @@ class Calculator:
         elif char == '⌫':
             self.expression = self.expression[:-1]
             self.result_var.set(self.expression)
+        elif char == '√':
+            try:
+                result = str(math.sqrt(float(self.expression)))
+                self.result_var.set(result)
+                self.expression = result
+            except:
+                self.result_var.set("Hiba")
+                self.expression = ""
         elif char == '=':
             try:
                 result = str(eval(self.expression))
