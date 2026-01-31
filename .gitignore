@@ -25,7 +25,8 @@ wheels/
 
 # PyInstaller
 *.manifest
-*.spec
+# Keep .spec files for rebuild
+# *.spec
 
 # Unit test / coverage
 htmlcov/
